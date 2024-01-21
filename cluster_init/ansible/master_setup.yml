@@ -1,0 +1,31 @@
+- name: Launch Master Node
+  hosts: all
+  become: true
+  vars:
+    non_root_user: ubuntu  # Replace with your non-root username
+    master_ip_public: "{{ lookup('file', 'master_ip_public.txt') | trim }}"
+  tasks:
+
+    - name: Update apt and install dependencies
+      apt:
+        update_cache: yes
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+
+    - name: Start k3s master node
+      shell: |
+          curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik --disable servicelb --tls-san {{ master_ip_public }}" sh -s - --token u2Qw5PbXC887MMv85LeG
+      args: 
+        chdir: /tmp
+        creates: /etc/systemd/system/k3s.service
+    - name: Show kubeconfig in the terminal
+      become: true
+      shell: cat /etc/rancher/k3s/k3s.yaml
+      register: kubeconfig_content
+
+    - name: Print kubeconfig content
+      debug:
+        msg: "{{ kubeconfig_content.stdout }}"
