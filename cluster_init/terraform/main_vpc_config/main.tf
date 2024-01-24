@@ -10,7 +10,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "terraform-state-oleksii"
+    bucket = "k3s-cluster-aws-jenkins"
     key    = "k3s_main_vpc/infra_setup.tfstate"
     region = "us-east-1"
   }
