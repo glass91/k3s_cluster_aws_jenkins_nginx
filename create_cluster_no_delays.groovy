@@ -97,7 +97,7 @@ pipeline {
         }
         stage('Run Ansible Playbooks') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'access_for_new_node_js_app', keyFileVariable: 'SSH_KEY')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ansible', keyFileVariable: 'SSH_KEY')]) {
                 sh '''
                 cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/ansible
                 ansible-playbook -i master_ip.txt master_setup.yml -u ubuntu --private-key=$SSH_KEY -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"'
@@ -110,7 +110,7 @@ pipeline {
     steps {
         script {
             sh '''
-            cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/aws_ingress_setup
+            cd ./cluster_init/aws_ingress_setup
             kubectl apply -f 1.metallb.yaml
             sleep 60
             kubectl apply -f 2.nginx-ingress.yaml
