@@ -11,7 +11,8 @@ TO_DO list:
    jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get, /usr/bin/curl, /usr/bin/tee, /usr/bin/apt-key, /usr/bin/sh
 2. Add AWS instance access key to the Jenkins credentials for the ancible playbook running (kind: SSH Username with private key) 
 3. Find TASK [Print kubeconfig content], take a config text and convert it from JSON to YAML
-4. On local PC or any instance with kubectl "cd ~/.kube" and run "sudo nano config". Paste yaml config, change master-node IP and save it.
+4. On local PC or any instance with kubectl "cd ~/.kube" and run "sudo nano config". Paste yaml config, change master-node IP and save it(IPMASTER:6443)
+6. kubectx
 5. Check connection "kubectl get nodes"
 
 6. Go to my repository locally: Lessons - k3s_cluster_aws_jenkins_nginx - cluster - aws_ingress_setup and run:
