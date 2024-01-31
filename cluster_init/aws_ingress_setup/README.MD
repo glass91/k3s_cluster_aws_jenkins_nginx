@@ -8,7 +8,7 @@
 
 1. run command "sudo visudo" on Jenkins server and add string(running pipeline without passw request):
    jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get, /usr/bin/curl, /usr/bin/tee, /usr/bin/apt-key, /usr/bin/sh
-
+1.1. include new role for IAMFullAccess(if needed)
 2. Add AWS instance access key to the Jenkins credentials for the ancible playbook running (kind: SSH Username with private key) 
 
 3. Find at the Jenkins logs certificate-authority-data JASON and convert it into YAML
