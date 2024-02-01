@@ -8,23 +8,15 @@ pipeline {
     }
 
     stages {
-        stage('Sparse Checkout') {
+        stage('Clone Git repo') {
             steps {
-                script {
-                    checkout([$class: 'GitSCM', 
-                              branches: [[name: 'main']],
-                              doGenerateSubmoduleConfigurations: false,
-                              extensions: [[
-                                  $class: 'SparseCheckoutPaths', 
-                                  sparseCheckoutPaths: [[path: 'projects/k3s_cluster_aws/cluster_init/']]
-                              ]],
-                              userRemoteConfigs: [[
-                                  url: 'https://github.com/OleksiiPasichnyk/Terraform.git'
-                              ]]
-                    ])
-                }
+                git(
+                    branch: 'main', 
+                    url: 'https://github.com/glass91/k3s_cluster_aws_jenkins_nginx.git', 
+                    credentialsId: 'acces_to_git'
+                )
             }
-        }
+        } 
         stage('Terraform Plan Destroy Worker Nodes') {
             steps {
                 sh '''
