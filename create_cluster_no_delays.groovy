@@ -34,7 +34,7 @@ pipeline {
         stage('Terraform Plan - Main VPC') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/main_vpc_config
+                cd ./cluster_init/terraform/main_vpc_config
                 terraform init -input=false
                 terraform plan -out=terraform.tfplan
                 '''
@@ -43,7 +43,7 @@ pipeline {
         stage('Terraform Apply - Main VPC') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/main_vpc_config
+                cd ./cluster_init/terraform/main_vpc_config
                 terraform apply -input=false terraform.tfplan
                 '''
             }
@@ -51,7 +51,7 @@ pipeline {
         stage('Terraform Plan - Master Node') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/master_node_config
+                cd ./cluster_init/terraform/master_node_config
                 terraform init -input=false
                 terraform plan -out=terraform.tfplan
                 '''
@@ -60,7 +60,7 @@ pipeline {
         stage('Terraform Apply - Master Node') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/master_node_config
+                cd ./cluster_init/terraform/master_node_config
                 terraform apply -input=false terraform.tfplan
                 terraform output -json k3s_master_instance_private_ip | jq -r 'if type == "array" then .[] else . end' > ../../ansible/master_ip.txt
                 terraform output -json k3s_master_instance_public_ip | jq -r 'if type == "array" then .[] else . end' > ../../ansible/master_ip_public.txt
