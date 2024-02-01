@@ -70,7 +70,7 @@ pipeline {
         stage('Terraform Plan - Worker Nodes') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/worker_node_config
+                cd ./cluster_init/terraform/worker_node_config
                 terraform init -input=false
                 terraform plan -out=terraform.tfplan
                 '''
@@ -79,7 +79,7 @@ pipeline {
         stage('Terraform Apply - Worker Nodes') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/worker_node_config
+                cd ./cluster_init/terraform/worker_node_config
                 terraform apply -input=false terraform.tfplan
                 '''
             }
@@ -88,7 +88,7 @@ pipeline {
             steps {
                 sh '''
                 sleep 120
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/worker_node_config
+                cd ./cluster_init/terraform/worker_node_config
                 terraform plan -out=terraform.tfplan
                 terraform apply -input=false terraform.tfplan
                 terraform output -json k3s_workers_instance_private_ip | jq -r '.[]' > ../../ansible/worker_ip.txt
@@ -99,7 +99,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ansible', keyFileVariable: 'SSH_KEY')]) {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/ansible
+                cd ./cluster_init/ansible
                 ansible-playbook -i master_ip.txt master_setup.yml -u ubuntu --private-key=$SSH_KEY -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"'
                 ansible-playbook -i worker_ip.txt worker_setup.yml -u ubuntu --private-key=$SSH_KEY -e 'ansible_ssh_common_args="-o StrictHostKeyChecking=no"'
                 '''
@@ -118,7 +118,7 @@ pipeline {
         }
         script {
             sh '''
-            cd ./k3s_cluster_aws_jenkins_nginx/cluster_entities/pacman
+            cd ./cluster_entities/pacman
             kubectl apply -f mongo-deployment.yaml
             kubectl apply -f packman-deployment.yaml
             '''
@@ -129,7 +129,7 @@ pipeline {
         stage('Create Route53 Record') {
             steps {
                 sh '''
-                cd ./k3s_cluster_aws_jenkins_nginx/cluster_init/terraform/route53_record
+                cd ./cluster_init/terraform/route53_record
                 terraform init -input=false
                 terraform plan -out=terraform.tfplan
                 terraform apply -input=false terraform.tfplan
