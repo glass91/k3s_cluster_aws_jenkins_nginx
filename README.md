@@ -19,7 +19,7 @@ hi iy is aws cluster
 
 6. kubectx (check namespace) We need default namespace(#kubectx namespace# use it, if you need to change namespace)
 
-5. Check connection "kubectl get nodes" (If you can see pods, it means we are connected to our cluster. We can see information for each pod like name, status, roles, age, and version)
+5. Check connection "kubectl get nodes" (If you can see nods, it means we are connected to our cluster. We can see information for each pod like name, status, roles, age, and version)
 
 6. (open second terminal window for convenience) After we connected to the cluster, we need to go to my(your) repository locally: Lessons NEXT k3s_cluster_aws_jenkins_nginx NEXT cluster_init  NEXT  aws_ingress_setup and run there two commands:
 
