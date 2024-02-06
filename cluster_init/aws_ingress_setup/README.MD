@@ -4,7 +4,7 @@
 
                             # k3s_cluster_aws #
 
-                             ### TO_DO LIST:###
+                             ### TO_DO LIST:### from VAL
    
 1. run command "sudo visudo" on Jenkins server and add string(running pipeline without passw request):
    jenkins ALL=(ALL) NOPASSWD: /usr/bin/apt-get, /usr/bin/curl, /usr/bin/tee, /usr/bin/apt-key, /usr/bin/sh
