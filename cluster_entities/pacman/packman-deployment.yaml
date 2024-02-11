@@ -32,8 +32,8 @@ spec:
 # TLS disabled for now need to setup cert-manager                  
 #   tls:
 #     - hosts:
-#         - pacman.paxel.ca
-#       secretName: pacman.paxel.ca-tls
+#         - pacman.паксель
+#       secretName: pacman.паксель-tls
 
 ---
 
